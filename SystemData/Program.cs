@@ -1,18 +1,12 @@
-﻿var exit = false;
+﻿
+var exit = false;
 while (exit == false)
 {
-    Console.Clear();
-    Console.WriteLine("Seleccione una opcion:\n\n" +
-        "1. Discos duros (Factory info)\n" +
-        "2. Discos duros\n" +
-        "3. Tarjeta de video\n" +
-        "4. Procesador\n" +
-        "5. Sistema Operativo\n" +
-        "6. Redes\n" +
-        "7. Sonido\n" +
-        "8. Impresoras\n" +
-        "¿Cerrar Programa? S/N");
+    //var ms = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
+    //foreach (var mo in ms.Get())
+    //    Console.WriteLine(mo["Model"]);
 
+    Menu();
     var rpta = Console.ReadLine().ToString().ToUpper();
     Console.Clear();
     switch (rpta)
@@ -49,6 +43,10 @@ while (exit == false)
             Printer();
             Wait();
             break;
+        case "?":
+            Info();
+            Wait();
+            break;
         default:
             exit = rpta == "S" ? true : false;
             break;
@@ -56,10 +54,55 @@ while (exit == false)
     }
 }
 
+static void Menu()
+{
+    Console.Title = "System Data";
+    string title = @"
+                     *                                                    *
+      *                          *               *                               *
+     ____     *               __                          ____        *     __               
+    /\  _`\            *     /\ \__      *               /\  _`\           /\ \__            *
+    \ \,\L\_\  __  __    ____\ \ ,_\    __    ___ ___    \ \ \/\ \     __  \ \ ,_\    __     
+     \/_\__ \ /\ \/\ \  /',__\\ \ \/  /'__`\/' __` __`\   \ \ \ \ \  /'__`\ \ \ \/  /'__`\   
+       /\ \L\ \ \ \_\ \/\__, `\\ \ \_/\  __//\ \/\ \/\ \   \ \ \_\ \/\ \L\.\_\ \ \_/\ \L\.\_ 
+       \ `\____\/`____ \/\____/ \ \__\ \____\ \_\ \_\ \_\   \ \____/\ \__/.\_\\ \__\ \__/.\_\
+        \/_____/`/___/> \/___/   \/__/\/____/\/_/\/_/\/_/    \/___/  \/__/\/_/ \/__/\/__/\/_/
+       *           /\___/                                 *                                   *   
+   *               \/__/                                               *                     
+                *                        *                                       *              ";
+    
+    Console.ForegroundColor = ConsoleColor.DarkGreen;
+    Console.WriteLine(title);
+    Console.ForegroundColor = ConsoleColor.Gray;
+    Console.WriteLine("                                        [Edicion de consola 1.0.0]");
+    Console.WriteLine("                                             por Wilmilcard\n");
+    Console.WriteLine("                                    para ayuda o informacion escribe ?\n\n");
+    Console.ForegroundColor = ConsoleColor.DarkYellow;
+    Console.WriteLine("SELECCIONE UNA OPCION:\n");
+    Console.ForegroundColor = ConsoleColor.Gray;
+    Console.WriteLine(
+        "1. Discos duros (Factory info)\n" +
+        "2. Discos duros\n" +
+        "3. Tarjeta de video\n" +
+        "4. Procesador\n" +
+        "5. Sistema Operativo\n" +
+        "6. Redes\n" +
+        "7. Sonido\n" +
+        "8. Impresoras\n");
+    Console.CursorSize = 60;
+    Console.WriteLine("¿Cerrar Programa? S/N");
+}
+
 static void Wait()
 {
-    Console.WriteLine("Oprima cualquier tecla para volver atras");
+    Console.ForegroundColor = ConsoleColor.DarkCyan;
+    Console.WriteLine(@"
+ __v_
+(____\/{  Oprima cualquier tecla para volver atras");
+    Console.ForegroundColor = ConsoleColor.Gray;
+
     Console.ReadLine();
+    Console.Clear();
 }
 
 static void HardDisksFactory()
@@ -271,4 +314,23 @@ static void Printer()
 
         Console.WriteLine(String.Empty.PadLeft(obj["Name"].ToString().Length, '='));
     }
+}
+
+static void Info()
+{
+    var text = $@"
+ ______________________________________________________________________
+|[] information.exe                                             |X]|! -|
+| -------------------------------------------------------------------|-|
+| Autor: Wilmilcard                                                  | |
+| Respositorio: https://github.com/Wilmilcard/SystemData             | |
+| Version: 1.0.0                                                     | |
+| Desarrollado en .net 6 - C#                                        | |
+|                                                                    |_|
+| ___________________________________________________________________|/|
+";
+    Console.WriteLine(text);
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("<3");
+    Console.ForegroundColor = ConsoleColor.Gray;
 }
