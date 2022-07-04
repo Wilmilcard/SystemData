@@ -6,9 +6,15 @@ while (exit == false)
         "1. Discos duros (Factory info)\n" +
         "2. Discos duros\n" +
         "3. Tarjeta de video\n" +
+        "4. Procesador\n" +
+        "5. Sistema Operativo\n" +
+        "6. Redes\n" +
+        "7. Sonido\n" +
+        "8. Impresoras\n" +
         "¿Cerrar Programa? S/N");
 
     var rpta = Console.ReadLine().ToString().ToUpper();
+    Console.Clear();
     switch (rpta)
     {
         case "1":
@@ -21,6 +27,26 @@ while (exit == false)
             break;
         case "3":
             Video();
+            Wait();
+            break;
+        case "4":
+            Processor();
+            Wait();
+            break;
+        case "5":
+            SO();
+            Wait();
+            break;
+        case "6":
+            Network();
+            Wait();
+            break;
+        case "7":
+            Sound();
+            Wait();
+            break;
+        case "8":
+            Printer();
             Wait();
             break;
         default:
@@ -146,5 +172,103 @@ static void Video()
         Console.WriteLine("VideoProcessor  -  " + obj["VideoProcessor"]);
         Console.WriteLine("VideoArchitecture  -  " + obj["VideoArchitecture"]);
         Console.WriteLine("VideoMemoryType  -  " + obj["VideoMemoryType"]);
+    }
+}
+
+static void Processor()
+{
+    var myProcessorObject = new ManagementObjectSearcher("select * from Win32_Processor");
+
+    foreach (ManagementObject obj in myProcessorObject.Get())
+    {
+        Console.WriteLine("Name  -  " + obj["Name"]);
+        Console.WriteLine("DeviceID  -  " + obj["DeviceID"]);
+        Console.WriteLine("Manufacturer  -  " + obj["Manufacturer"]);
+        Console.WriteLine("CurrentClockSpeed  -  " + obj["CurrentClockSpeed"]);
+        Console.WriteLine("Caption  -  " + obj["Caption"]);
+        Console.WriteLine("NumberOfCores  -  " + obj["NumberOfCores"]);
+        Console.WriteLine("NumberOfEnabledCore  -  " + obj["NumberOfEnabledCore"]);
+        Console.WriteLine("NumberOfLogicalProcessors  -  " + obj["NumberOfLogicalProcessors"]);
+        Console.WriteLine("Architecture  -  " + obj["Architecture"]);
+        Console.WriteLine("Family  -  " + obj["Family"]);
+        Console.WriteLine("ProcessorType  -  " + obj["ProcessorType"]);
+        Console.WriteLine("Characteristics  -  " + obj["Characteristics"]);
+        Console.WriteLine("AddressWidth  -  " + obj["AddressWidth"]);
+    }
+}
+
+static void SO()
+{
+    var myOperativeSystemObject = new ManagementObjectSearcher("select * from Win32_OperatingSystem");
+
+    foreach (ManagementObject obj in myOperativeSystemObject.Get())
+    {
+        Console.WriteLine("Caption  -  " + obj["Caption"]);
+        Console.WriteLine("WindowsDirectory  -  " + obj["WindowsDirectory"]);
+        Console.WriteLine("ProductType  -  " + obj["ProductType"]);
+        Console.WriteLine("SerialNumber  -  " + obj["SerialNumber"]);
+        Console.WriteLine("SystemDirectory  -  " + obj["SystemDirectory"]);
+        Console.WriteLine("CountryCode  -  " + obj["CountryCode"]);
+        Console.WriteLine("CurrentTimeZone  -  " + obj["CurrentTimeZone"]);
+        Console.WriteLine("EncryptionLevel  -  " + obj["EncryptionLevel"]);
+        Console.WriteLine("OSType  -  " + obj["OSType"]);
+        Console.WriteLine("Version  -  " + obj["Version"]);
+    }
+}
+
+static void Network()
+{
+    NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+
+    if (nics == null || nics.Length < 1)
+    {
+        Console.WriteLine("  No network interfaces found.");
+    }
+    else
+    {
+        foreach (NetworkInterface adapter in nics)
+        {
+            IPInterfaceProperties properties = adapter.GetIPProperties();
+            Console.WriteLine();
+            Console.WriteLine(adapter.Description);
+            Console.WriteLine(String.Empty.PadLeft(adapter.Description.Length, '='));
+            Console.WriteLine("  Interface type .......................... : {0}", adapter.NetworkInterfaceType);
+            Console.WriteLine("  Physical Address ........................ : {0}", adapter.GetPhysicalAddress().ToString());
+            Console.WriteLine("  Operational status ...................... : {0}", adapter.OperationalStatus);
+        }
+    }
+}
+
+static void Sound()
+{
+    var myAudioObject = new ManagementObjectSearcher("select * from Win32_SoundDevice");
+
+    foreach (ManagementObject obj in myAudioObject.Get())
+    {
+        Console.WriteLine("Name  -  " + obj["Name"]);
+        Console.WriteLine("ProductName  -  " + obj["ProductName"]);
+        Console.WriteLine("Availability  -  " + obj["Availability"]);
+        Console.WriteLine("DeviceID  -  " + obj["DeviceID"]);
+        Console.WriteLine("PowerManagementSupported  -  " + obj["PowerManagementSupported"]);
+        Console.WriteLine("Status  -  " + obj["Status"]);
+        Console.WriteLine("StatusInfo  -  " + obj["StatusInfo"]);
+        Console.WriteLine(String.Empty.PadLeft(obj["ProductName"].ToString().Length, '='));
+    }
+}
+
+static void Printer()
+{
+    var myPrinterObject = new ManagementObjectSearcher("select * from Win32_Printer");
+
+    foreach (ManagementObject obj in myPrinterObject.Get())
+    {
+        Console.WriteLine("Name  -  " + obj["Name"]);
+        Console.WriteLine("Network  -  " + obj["Network"]);
+        Console.WriteLine("Availability  -  " + obj["Availability"]);
+        Console.WriteLine("Is default printer  -  " + obj["Default"]);
+        Console.WriteLine("DeviceID  -  " + obj["DeviceID"]);
+        Console.WriteLine("Status  -  " + obj["Status"]);
+
+        Console.WriteLine(String.Empty.PadLeft(obj["Name"].ToString().Length, '='));
     }
 }
