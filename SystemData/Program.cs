@@ -1,11 +1,6 @@
-﻿
-var exit = false;
+﻿var exit = false;
 while (exit == false)
 {
-    //var ms = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
-    //foreach (var mo in ms.Get())
-    //    Console.WriteLine(mo["Model"]);
-
     Menu();
     var rpta = Console.ReadLine().ToString().ToUpper();
     Console.Clear();
@@ -54,9 +49,12 @@ while (exit == false)
     }
 }
 
+//Programana Main
 static void Menu()
 {
     Console.Title = "System Data";
+    //Console.WindowHeight = 35;
+    //Console.WindowWidth = 120;
     string title = @"
                      *                                                    *
       *                          *               *                               *
@@ -82,7 +80,7 @@ static void Menu()
     Console.ForegroundColor = ConsoleColor.Gray;
     Console.WriteLine(
         "1. Discos duros (Factory info)\n" +
-        "2. Discos duros\n" +
+        "2. Discos duros (Resume info)\n" +
         "3. Tarjeta de video\n" +
         "4. Procesador\n" +
         "5. Sistema Operativo\n" +
@@ -105,6 +103,26 @@ static void Wait()
     Console.Clear();
 }
 
+static void Info()
+{
+    var text = $@"
+ ______________________________________________________________________
+|[] information.exe                                             |X]|! -|
+| -------------------------------------------------------------------|-|
+| Autor: Wilmilcard                                                  | |
+| Respositorio: https://github.com/Wilmilcard/SystemData             | |
+| Version: 1.0.0                                                     | |
+| Desarrollado en .net 6 - C#                                        | |
+|                                                                    |_|
+| ___________________________________________________________________|/|
+";
+    Console.WriteLine(text);
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("<3");
+    Console.ForegroundColor = ConsoleColor.Gray;
+}
+
+//Opciones de menu
 static void HardDisksFactory()
 {
 
@@ -112,20 +130,16 @@ static void HardDisksFactory()
     foreach (ManagementObject d in driveQuery.Get())
     {
         var deviceId = d.Properties["DeviceId"].Value;
-        //Console.WriteLine("Device");
-        //Console.WriteLine(d);
         var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", d.Path.RelativePath);
         var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
         foreach (ManagementObject p in partitionQuery.Get())
         {
             //Console.WriteLine("Partition");
-            //Console.WriteLine(p);
             var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", p.Path.RelativePath);
             var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);
             foreach (ManagementObject ld in logicalDriveQuery.Get())
             {
-                //Console.WriteLine("Logical drive");
-                //Console.WriteLine(ld);
+                Console.WriteLine(ld.Properties["Name"].Value);
 
                 var physicalName = Convert.ToString(d.Properties["Name"].Value); // \\.\PHYSICALDRIVE2
                 var diskName = Convert.ToString(d.Properties["Caption"].Value); // WDC WD5001AALS-xxxxxx
@@ -148,26 +162,28 @@ static void HardDisksFactory()
                 var volumeName = Convert.ToString(ld.Properties["VolumeName"].Value); // System
                 var volumeSerial = Convert.ToString(ld.Properties["VolumeSerialNumber"].Value); // 12345678
 
-                Console.WriteLine("PhysicalName: {0}", physicalName);
-                Console.WriteLine("DiskName: {0}", diskName);
-                Console.WriteLine("DiskModel: {0}", diskModel);
-                Console.WriteLine("DiskInterface: {0}", diskInterface);
-                // Console.WriteLine("Capabilities: {0}", capabilities);
-                Console.WriteLine("MediaLoaded: {0}", mediaLoaded);
-                Console.WriteLine("MediaType: {0}", mediaType);
-                Console.WriteLine("MediaSignature: {0}", mediaSignature);
-                Console.WriteLine("MediaStatus: {0}", mediaStatus);
+                Console.WriteLine("   PhysicalName: {0}", physicalName);
+                Console.WriteLine("   DiskName: {0}", diskName);
+                Console.WriteLine("   DiskModel: {0}", diskModel);
+                Console.WriteLine("   DiskInterface: {0}", diskInterface);
+                Console.WriteLine("   Capabilities: {0}", capabilities);
+                Console.WriteLine("   MediaLoaded: {0}", mediaLoaded);
+                Console.WriteLine("   MediaType: {0}", mediaType);
+                Console.WriteLine("   MediaSignature: {0}", mediaSignature);
+                Console.WriteLine("   MediaStatus: {0}", mediaStatus);
 
-                Console.WriteLine("DriveName: {0}", driveName);
-                Console.WriteLine("DriveId: {0}", driveId);
-                Console.WriteLine("DriveCompressed: {0}", driveCompressed);
-                Console.WriteLine("DriveType: {0}", driveType);
-                Console.WriteLine("FileSystem: {0}", fileSystem);
-                Console.WriteLine("FreeSpace: {0}", freeSpace);
-                Console.WriteLine("TotalSpace: {0}", totalSpace);
-                Console.WriteLine("DriveMediaType: {0}", driveMediaType);
-                Console.WriteLine("VolumeName: {0}", volumeName);
-                Console.WriteLine("VolumeSerial: {0}", volumeSerial);
+                Console.WriteLine("   DriveName: {0}", driveName);
+                Console.WriteLine("   DriveId: {0}", driveId);
+                Console.WriteLine("   DriveCompressed: {0}", driveCompressed);
+                Console.WriteLine("   DriveType: {0}", driveType);
+                Console.WriteLine("   FileSystem: {0}", fileSystem);
+                Console.WriteLine("   FreeSpace: {0} bytes", freeSpace);
+                Console.WriteLine("   TotalSpace: {0} bytes", totalSpace);
+                Console.WriteLine("   FreeSpace: {0} GB", freeSpace);
+                Console.WriteLine("   TotalSpace: {0} GB", totalSpace);
+                Console.WriteLine("   DriveMediaType: {0}", driveMediaType);
+                Console.WriteLine("   VolumeName: {0}", volumeName);
+                Console.WriteLine("   VolumeSerial: {0}", volumeSerial);
 
                 Console.WriteLine(new string('-', 79));
             }
@@ -177,8 +193,7 @@ static void HardDisksFactory()
 
 static void HardDisks()
 {
-    double KbToGbFactor = 1d / 1024 / 1024;
-
+    var KbToGbFactor = 1d / 1024 / 1024;
     DriveInfo[] allDrives = DriveInfo.GetDrives();
 
     foreach (DriveInfo d in allDrives)
@@ -190,10 +205,13 @@ static void HardDisks()
             Console.WriteLine("  Volume label: {0}", d.VolumeLabel);
             Console.WriteLine("  File system: {0}", d.DriveFormat);
             Console.WriteLine("  Available space to current user:{0, 15} bytes", d.AvailableFreeSpace);
-            Console.WriteLine("  Total available space:          {0, 15} bytes", d.TotalFreeSpace);
-            Console.WriteLine("  Total size of drive:            {0, 15} bytes ", d.TotalSize);
-            Console.WriteLine("  Total size of drive:            {0} GB ", d.TotalSize * KbToGbFactor);
+            Console.WriteLine("  Available space to current user:{0} GB", d.AvailableFreeSpace * KbToGbFactor);
+            Console.WriteLine("  Total available space: {0, 15} bytes", d.TotalFreeSpace);
+            Console.WriteLine("  Total available space: {0} GB", d.TotalFreeSpace * KbToGbFactor);
+            Console.WriteLine("  Total size of drive: {0, 15} bytes ", d.TotalSize);
+            Console.WriteLine("  Total size of drive: {0} GB ", d.TotalSize * KbToGbFactor);
         }
+        Console.WriteLine(new string('-', 79));
     }
 }
 
@@ -314,23 +332,4 @@ static void Printer()
 
         Console.WriteLine(String.Empty.PadLeft(obj["Name"].ToString().Length, '='));
     }
-}
-
-static void Info()
-{
-    var text = $@"
- ______________________________________________________________________
-|[] information.exe                                             |X]|! -|
-| -------------------------------------------------------------------|-|
-| Autor: Wilmilcard                                                  | |
-| Respositorio: https://github.com/Wilmilcard/SystemData             | |
-| Version: 1.0.0                                                     | |
-| Desarrollado en .net 6 - C#                                        | |
-|                                                                    |_|
-| ___________________________________________________________________|/|
-";
-    Console.WriteLine(text);
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine("<3");
-    Console.ForegroundColor = ConsoleColor.Gray;
 }
