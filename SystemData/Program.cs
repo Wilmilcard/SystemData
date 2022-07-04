@@ -5,7 +5,7 @@ while (exit == false)
     Console.WriteLine("Seleccione una opcion:\n\n" +
         "1. Discos duros (Factory info)\n" +
         "2. Discos duros\n" +
-        "3. Tarjeta de video\n\n" +
+        "3. Tarjeta de video\n" +
         "¿Cerrar Programa? S/N");
 
     var rpta = Console.ReadLine().ToString().ToUpper();
@@ -17,6 +17,10 @@ while (exit == false)
             break;
         case "2":
             HardDisks();
+            Wait();
+            break;
+        case "3":
+            Video();
             Wait();
             break;
         default:
@@ -124,3 +128,23 @@ static void HardDisks()
     }
 }
 
+static void Video()
+{
+    var myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
+
+    foreach (ManagementObject obj in myVideoObject.Get())
+    {
+        Console.WriteLine("Name  -  " + obj["Name"]);
+        Console.WriteLine("Status  -  " + obj["Status"]);
+        Console.WriteLine("Caption  -  " + obj["Caption"]);
+        Console.WriteLine("DeviceID  -  " + obj["DeviceID"]);
+        Console.WriteLine("AdapterRAM  -  " + obj["AdapterRAM"]);
+        Console.WriteLine("AdapterDACType  -  " + obj["AdapterDACType"]);
+        Console.WriteLine("Monochrome  -  " + obj["Monochrome"]);
+        Console.WriteLine("InstalledDisplayDrivers  -  " + obj["InstalledDisplayDrivers"]);
+        Console.WriteLine("DriverVersion  -  " + obj["DriverVersion"]);
+        Console.WriteLine("VideoProcessor  -  " + obj["VideoProcessor"]);
+        Console.WriteLine("VideoArchitecture  -  " + obj["VideoArchitecture"]);
+        Console.WriteLine("VideoMemoryType  -  " + obj["VideoMemoryType"]);
+    }
+}
