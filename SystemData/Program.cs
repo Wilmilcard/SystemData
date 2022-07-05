@@ -1,4 +1,5 @@
-﻿var exit = false;
+﻿using System.Windows.Input;
+var exit = false;
 while (exit == false)
 {
     Menu();
@@ -37,6 +38,9 @@ while (exit == false)
         case "8":
             Printer();
             Wait();
+            break;
+        case "9":
+            game();
             break;
         case "?":
             Info();
@@ -86,7 +90,8 @@ static void Menu()
         "5. Sistema Operativo\n" +
         "6. Redes\n" +
         "7. Sonido\n" +
-        "8. Impresoras\n");
+        "8. Impresoras\n" +
+        "9. juego\n");
     Console.CursorSize = 60;
     Console.WriteLine("¿Cerrar Programa? S/N");
 }
@@ -446,5 +451,23 @@ static void Printer()
         Console.WriteLine("Status  -  " + obj["Status"]);
 
         Console.WriteLine(String.Empty.PadLeft(obj["Name"].ToString().Length, '='));
+    }
+}
+
+//GAME
+static void game()
+{
+    while (true)
+    {
+        Console.WriteLine("-->");
+        if (Console.ReadKey(true).Key == ConsoleKey.DownArrow)
+        {
+            while (true)
+            {
+                Console.WriteLine("|");
+                Console.WriteLine("|");
+                Console.WriteLine("v");
+            }
+        }
     }
 }
