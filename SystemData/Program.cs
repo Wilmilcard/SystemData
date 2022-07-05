@@ -68,7 +68,7 @@ static void Menu()
        *           /\___/                                 *                                   *   
    *               \/__/                                               *                     
                 *                        *                                       *              ";
-    
+
     Console.ForegroundColor = ConsoleColor.DarkGreen;
     Console.WriteLine(title);
     Console.ForegroundColor = ConsoleColor.Gray;
@@ -195,23 +195,55 @@ static void HardDisks()
 {
     var KbToGbFactor = 1d / 1024 / 1024;
     DriveInfo[] allDrives = DriveInfo.GetDrives();
+    ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+    int[] color_index = new int[] { 14, 13, 12, 11, 10, 9, 6, 5, 4, 3, 2, 1 };
+    var count = 0;
 
     foreach (DriveInfo d in allDrives)
     {
         Console.WriteLine("Drive {0}", d.Name);
-        Console.WriteLine("  Drive type: {0}", d.DriveType);
         if (d.IsReady == true)
         {
-            Console.WriteLine("  Volume label: {0}", d.VolumeLabel);
-            Console.WriteLine("  File system: {0}", d.DriveFormat);
-            Console.WriteLine("  Available space to current user:{0, 15} bytes", d.AvailableFreeSpace);
-            Console.WriteLine("  Available space to current user:{0} GB", d.AvailableFreeSpace * KbToGbFactor);
-            Console.WriteLine("  Total available space: {0, 15} bytes", d.TotalFreeSpace);
-            Console.WriteLine("  Total available space: {0} GB", d.TotalFreeSpace * KbToGbFactor);
-            Console.WriteLine("  Total size of drive: {0, 15} bytes ", d.TotalSize);
-            Console.WriteLine("  Total size of drive: {0} GB ", d.TotalSize * KbToGbFactor);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  Drive type: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(d.DriveType);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  Volume label: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(d.VolumeLabel);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  File system: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(d.DriveFormat);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  Available space to current user: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("{0, 15} bytes", d.AvailableFreeSpace);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  Available space to current user: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("{0} GB", d.AvailableFreeSpace * KbToGbFactor);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  Total available space: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("{0, 15} bytes", d.TotalFreeSpace);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  Total available space: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("{0} GB", d.TotalFreeSpace * KbToGbFactor);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  Total size of drive: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("{0, 15} bytes ", d.TotalSize);
+            Console.ForegroundColor = colors[color_index[count]];
+            Console.Write("  Total size of drive: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("{0} GB ", d.TotalSize * KbToGbFactor);
         }
         Console.WriteLine(new string('-', 79));
+        count = count <= 11 ? count++ : 0;
+        count++;
     }
 }
 
@@ -221,18 +253,19 @@ static void Video()
 
     foreach (ManagementObject obj in myVideoObject.Get())
     {
-        Console.WriteLine("Name  -  " + obj["Name"]);
-        Console.WriteLine("Status  -  " + obj["Status"]);
-        Console.WriteLine("Caption  -  " + obj["Caption"]);
-        Console.WriteLine("DeviceID  -  " + obj["DeviceID"]);
-        Console.WriteLine("AdapterRAM  -  " + obj["AdapterRAM"]);
-        Console.WriteLine("AdapterDACType  -  " + obj["AdapterDACType"]);
-        Console.WriteLine("Monochrome  -  " + obj["Monochrome"]);
-        Console.WriteLine("InstalledDisplayDrivers  -  " + obj["InstalledDisplayDrivers"]);
-        Console.WriteLine("DriverVersion  -  " + obj["DriverVersion"]);
-        Console.WriteLine("VideoProcessor  -  " + obj["VideoProcessor"]);
-        Console.WriteLine("VideoArchitecture  -  " + obj["VideoArchitecture"]);
-        Console.WriteLine("VideoMemoryType  -  " + obj["VideoMemoryType"]);
+        Console.WriteLine(" Name: {0}", obj["Name"]);
+        Console.WriteLine(" Status: {0}", obj["Status"]);
+        Console.WriteLine(" Caption: {0}", obj["Caption"]);
+        Console.WriteLine(" DeviceID: {0}", obj["DeviceID"]);
+        Console.WriteLine(" AdapterRAM: {0}", obj["AdapterRAM"]);
+        Console.WriteLine(" AdapterDACType: {0}", obj["AdapterDACType"]);
+        Console.WriteLine(" Monochrome: {0}", obj["Monochrome"]);
+        Console.WriteLine(" InstalledDisplayDrivers: {0}", obj["InstalledDisplayDrivers"]);
+        Console.WriteLine(" DriverVersion: {0}", obj["DriverVersion"]);
+        Console.WriteLine(" VideoProcessor: {0}", obj["VideoProcessor"]);
+        Console.WriteLine(" VideoArchitecture: {0}", obj["VideoArchitecture"]);
+        Console.WriteLine(" VideoMemoryType: {0}", obj["VideoMemoryType"]);
+        Console.WriteLine(new string('-', 79));
     }
 }
 
@@ -242,10 +275,10 @@ static void Processor()
 
     foreach (ManagementObject obj in myProcessorObject.Get())
     {
-        Console.WriteLine("Name  -  " + obj["Name"]);
-        Console.WriteLine("DeviceID  -  " + obj["DeviceID"]);
-        Console.WriteLine("Manufacturer  -  " + obj["Manufacturer"]);
-        Console.WriteLine("CurrentClockSpeed  -  " + obj["CurrentClockSpeed"]);
+        Console.WriteLine("Name: {0}", obj["Name"]);
+        Console.WriteLine("DeviceID: {0}", obj["DeviceID"]);
+        Console.WriteLine("Manufacturer: {0}", obj["Manufacturer"]);
+        Console.WriteLine("CurrentClockSpeed: {0}", obj["CurrentClockSpeed"]);
         Console.WriteLine("Caption  -  " + obj["Caption"]);
         Console.WriteLine("NumberOfCores  -  " + obj["NumberOfCores"]);
         Console.WriteLine("NumberOfEnabledCore  -  " + obj["NumberOfEnabledCore"]);
