@@ -39,9 +39,9 @@ while (exit == false)
             Printer();
             Wait();
             break;
-        case "9":
-            game();
-            break;
+        //case "9":
+        //    game();
+        //    break;
         case "?":
             Info();
             Wait();
@@ -455,19 +455,19 @@ static void Printer()
 }
 
 //GAME
-static void game()
-{
-    while (true)
-    {
-        Console.WriteLine("-->");
-        if (Console.ReadKey(true).Key == ConsoleKey.DownArrow)
-        {
-            while (true)
-            {
-                Console.WriteLine("|");
-                Console.WriteLine("|");
-                Console.WriteLine("v");
-            }
-        }
-    }
-}
+//static void game()
+//{
+//    while (true)
+//    {
+//        Console.WriteLine("-->");
+//        if (Console.ReadKey(true).Key == ConsoleKey.DownArrow)
+//        {
+//            while (true)
+//            {
+//                Console.WriteLine("|");
+//                Console.WriteLine("|");
+//                Console.WriteLine("v");
+//            }
+//        }
+//    }
+//}
