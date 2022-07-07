@@ -90,8 +90,7 @@ static void Menu()
         "5. Sistema Operativo\n" +
         "6. Redes\n" +
         "7. Sonido\n" +
-        "8. Impresoras\n" +
-        "9. juego\n");
+        "8. Impresoras\n");
     Console.CursorSize = 60;
     Console.WriteLine("¿Cerrar Programa? S/N");
 }
