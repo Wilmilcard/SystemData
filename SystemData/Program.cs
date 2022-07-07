@@ -133,9 +133,10 @@ static void Info()
 static void HardDisksFactory()
 {
     var utils = new Utils();
-    var count = 0;
+    var count = utils.RandomNumber();
     var KbToGbFactor = 1d / 1024 / 1024;
     var driveQuery = new ManagementObjectSearcher("select * from Win32_DiskDrive");
+
     foreach (ManagementObject d in driveQuery.Get())
     {
         var deviceId = d.Properties["DeviceId"].Value;
@@ -277,7 +278,7 @@ static void HardDisks()
     var utils = new Utils();
     var KbToGbFactor = 1d / 1024 / 1024;
     DriveInfo[] allDrives = DriveInfo.GetDrives();
-    var count = 0;
+    var count = utils.RandomNumber();
 
     foreach (DriveInfo d in allDrives)
     {
@@ -334,23 +335,64 @@ static void Video()
     var myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
     var utils = new Utils();
     var KbToGbFactor = 1d / 1024 / 1024;
-    var count = 0;
+    var count = utils.RandomNumber();
 
     foreach (ManagementObject obj in myVideoObject.Get())
     {
-        Console.WriteLine(" Name: {0}", obj["Name"]);
-        Console.WriteLine(" Status: {0}", obj["Status"]);
-        Console.WriteLine(" Caption: {0}", obj["Caption"]);
-        Console.WriteLine(" DeviceID: {0}", obj["DeviceID"]);
-        Console.WriteLine(" AdapterRAM: {0}", obj["AdapterRAM"]);
-        Console.WriteLine(" AdapterDACType: {0}", obj["AdapterDACType"]);
-        Console.WriteLine(" Monochrome: {0}", obj["Monochrome"]);
-        Console.WriteLine(" InstalledDisplayDrivers: {0}", obj["InstalledDisplayDrivers"]);
-        Console.WriteLine(" DriverVersion: {0}", obj["DriverVersion"]);
-        Console.WriteLine(" VideoProcessor: {0}", obj["VideoProcessor"]);
-        Console.WriteLine(" VideoArchitecture: {0}", obj["VideoArchitecture"]);
-        Console.WriteLine(" VideoMemoryType: {0}", obj["VideoMemoryType"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" Name: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["Name"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" Status: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["Status"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" Caption: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["Caption"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" DeviceID: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["DeviceID"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" AdapterRAM: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["AdapterRAM"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" AdapterDACType: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["AdapterDACType"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" Monochrome: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["Monochrome"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" InstalledDisplayDrivers: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["InstalledDisplayDrivers"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" DriverVersion: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["DriverVersion"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" VideoProcessor: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["VideoProcessor"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" VideoArchitecture: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["VideoArchitecture"]);
+        Console.ForegroundColor = utils.ColorSelect(count);
+        Console.Write(" VideoMemoryType: ");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(obj["VideoMemoryType"]);
+
         Console.WriteLine(new string('-', 79));
+        if (count <= 11)
+            count++;
+        else
+            count = 0;
     }
 }
 

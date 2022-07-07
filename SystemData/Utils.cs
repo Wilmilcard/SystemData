@@ -14,5 +14,10 @@ namespace SystemData
             int[] color_index = new int[] { 14, 13, 12, 11, 10, 9, 6, 5, 4, 3, 2, 1 };
             return colors[color_index[count]];
         }
+
+        public int RandomNumber()
+        {
+            return new Random().Next(0, 11);
+        }
     }
 }
