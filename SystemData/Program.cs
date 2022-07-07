@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+﻿
 var exit = false;
 while (exit == false)
 {
@@ -129,16 +129,10 @@ static void Info()
     Console.ForegroundColor = ConsoleColor.Gray;
 }
 
-static ConsoleColor ColorSelect(int count)
-{
-    ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
-    int[] color_index = new int[] { 14, 13, 12, 11, 10, 9, 6, 5, 4, 3, 2, 1 };
-    return colors[color_index[count]];
-}
-
 //Opciones de menu
 static void HardDisksFactory()
 {
+    var utils = new Utils();
     var count = 0;
     var KbToGbFactor = 1d / 1024 / 1024;
     var driveQuery = new ManagementObjectSearcher("select * from Win32_DiskDrive");
@@ -178,92 +172,92 @@ static void HardDisksFactory()
                 var volumeName = Convert.ToString(ld.Properties["VolumeName"].Value); // System
                 var volumeSerial = Convert.ToString(ld.Properties["VolumeSerialNumber"].Value); // 12345678
 
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   PhysicalName: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(physicalName);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   PhysicalName: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(physicalName);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   DiskName: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(diskName);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   DiskModel: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(diskModel);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   DiskInterface: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(diskInterface);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   Capabilities: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(capabilities);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   MediaLoaded: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(mediaLoaded);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   MediaType: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(mediaType);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   MediaSignature: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(mediaSignature);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   MediaStatus: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(mediaStatus);
 
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   DriveName: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(driveName);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   DriveId: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(driveId);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   DriveCompressed: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(driveCompressed);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   DriveType: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(driveType);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   FileSystem: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(fileSystem);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   FreeSpace: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("{0} bytes", freeSpace);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   TotalSpace: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("{0} bytes", totalSpace);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   FreeSpace: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("{0} GB", freeSpace * KbToGbFactor);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   TotalSpace: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("{0} GB", totalSpace * KbToGbFactor);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   DriveMediaType: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(driveMediaType);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   VolumeName: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(volumeName);
-                Console.ForegroundColor = ColorSelect(count);
+                Console.ForegroundColor = utils.ColorSelect(count);
                 Console.Write("   VolumeSerial: ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(volumeSerial);
@@ -280,6 +274,7 @@ static void HardDisksFactory()
 
 static void HardDisks()
 {
+    var utils = new Utils();
     var KbToGbFactor = 1d / 1024 / 1024;
     DriveInfo[] allDrives = DriveInfo.GetDrives();
     var count = 0;
@@ -289,39 +284,39 @@ static void HardDisks()
         Console.WriteLine("Drive {0}", d.Name);
         if (d.IsReady == true)
         {
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  Drive type: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(d.DriveType);
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  Volume label: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(d.VolumeLabel);
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  File system: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(d.DriveFormat);
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  Available space to current user: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("{0, 15} bytes", d.AvailableFreeSpace);
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  Available space to current user: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("{0} GB", d.AvailableFreeSpace * KbToGbFactor);
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  Total available space: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("{0, 15} bytes", d.TotalFreeSpace);
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  Total available space: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("{0} GB", d.TotalFreeSpace * KbToGbFactor);
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  Total size of drive: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("{0, 15} bytes ", d.TotalSize);
-            Console.ForegroundColor = ColorSelect(count);
+            Console.ForegroundColor = utils.ColorSelect(count);
             Console.Write("  Total size of drive: ");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("{0} GB ", d.TotalSize * KbToGbFactor);
@@ -337,6 +332,9 @@ static void HardDisks()
 static void Video()
 {
     var myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
+    var utils = new Utils();
+    var KbToGbFactor = 1d / 1024 / 1024;
+    var count = 0;
 
     foreach (ManagementObject obj in myVideoObject.Get())
     {
